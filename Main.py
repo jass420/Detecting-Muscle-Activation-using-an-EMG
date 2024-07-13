@@ -81,7 +81,6 @@ if 'C:/Users/mjas0/OneDrive/Desktop/moscle\\bicep_flex' in full_paths:
     audio_paths = [os.path.join('C:/Users/mjas0/OneDrive/Desktop/moscle\\bicep_flex', f) for f in os.listdir('C:/Users/mjas0/OneDrive/Desktop/moscle\\bicep_flex')]
     wav_files = [f for f in audio_paths if f.endswith('.wav')]
     process_audio(wav_files, c=0, typ='train')
-    
 
 if 'C:/Users/mjas0/OneDrive/Desktop/moscle\\twist_arm' in full_paths:
     twist_audio_paths = [os.path.join('C:/Users/mjas0/OneDrive/Desktop/moscle\\twist_arm', f) for f in os.listdir('C:/Users/mjas0/OneDrive/Desktop/moscle\\twist_arm')]
@@ -97,14 +96,16 @@ if 'C:/Users/mjas0/OneDrive/Desktop/moscle\\test_arm_twist' in full_paths:
     twist_test_audio_paths = [os.path.join('C:/Users/mjas0/OneDrive/Desktop/moscle\\test_arm_twist', f) for f in os.listdir('C:/Users/mjas0/OneDrive/Desktop/moscle\\test_arm_twist')]
     twist_test_wav_files = [f for f in twist_test_audio_paths if f.endswith('.wav')]
     process_audio(twist_test_wav_files, c=1, typ='test')
-    
-#print(x_test, y_test)
+#The code below initiates an MLP classifier with optimal parameters and subsequently applies bagging using bootstrapped data. 
+#The ensemble of the mlp classifiers is then used to make predictions    
+#1)Creating a mlp classifier
 mlp_clf = MLPClassifier(hidden_layer_sizes=(350,200,100,50), activation='logistic', solver='adam', tol=0.01, verbose=True, learning_rate='adaptive', warm_start=True, early_stopping=True)
+#2) Bagging
 bag_clf = BaggingClassifier(estimator=mlp_clf, bootstrap=True)
+#3) Fitting the model to our data
 bag_clf.fit(x_train, y_train)
 train_pred = bag_clf.predict(x_test)
-#mlp_clf.fit(x_train,y_train)
-#train_pred = mlp_clf.predict(x_test)
+#Accuracy is calculated
 accuracy = accuracy_score(y_test, train_pred)
 
 print(f"Accuracy: {np.around(accuracy*100, 2)}%")
@@ -114,7 +115,6 @@ plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.show()
 exit()
-#mlp_clf = MLPClassifier(hidden_layer_sizes=(1000,900,800,700,600,500,400, 300), activation='logistic', solver='sgd', verbose=True, random_state=60)
 log_regr = LogisticRegression(penalty='l2', solver='liblinear', C=1.0, multi_class='auto')
 log_regr.fit(x_train, y_train)
 
@@ -144,26 +144,4 @@ train_pred = mlp_clf.predict(x_train)
 accuracy = accuracy_score(x_train, train_pred)  # Assuming y_test contains the true labels for X_test 
 print("Test set accuracy:", accuracy)
  
-exit()
-#sf.write('out.wav', data, fs)
-#status = sd.wait()'''
-
-
-
-def create_model():
-    model = Sequential([
-        Dense(128, activation='relu', shape = (735163,)),
-        Dropout(0.2),
-        Dense(64, activation='relu'),
-        Dropout(0.2),
-        Dense(32, activation='relu'),
-        Dense(1, activation='sigmoid')
-    ])
-    model.compile(optimizer='adam',
-                  loss='binary_crossentropy',  # Use 'categorical_crossentropy' for multi-class
-                  metrics=['accuracy'])
-    return model
-    
-def train(model, x, y, x_val, y_val):
-    model.fit(x= x, y = y, epochs= 5, batch_size=32, validation_data = (x_val, y_val))
 
