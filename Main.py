@@ -1,11 +1,3 @@
-# Backyard Brains Sep. 2019
-# Made for python 3
-# First install serial library
-# Install numpy, pyserial, matplotlib
-# pip3 install pyserial
-#
-# Code will read, parse and display data from BackyardBrains' serial devices
-#
 # Written by Jasnoor Matharu
 # mjas0401@gmail.com
 
