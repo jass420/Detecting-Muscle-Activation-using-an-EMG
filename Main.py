@@ -11,8 +11,6 @@ import soundfile as sf
 import librosa
 import tensorflow as tf
 import os
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, Dropout
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
