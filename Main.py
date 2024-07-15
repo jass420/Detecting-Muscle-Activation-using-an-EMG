@@ -20,17 +20,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.ensemble import BaggingClassifier
 
-
-'''# Keep sf of the file
-y, sr = librosa.load('BYB_Recording_2024-02-03_17.11.20.wav', sr=None)
-# Automatically resample to a desired fs
-y, sr = librosa.load('BYB_Recording_2024-02-03_17.11.20.wav', sr=44100)
-# Load the Nutcracker example
-#filename = librosa.example('nutcracker')
-#y, sr = librosa.load(filename, sr=None) 
-
-librosa.display.waveshow(y, sr)
-plt.show()'''
 #bicep_flex = 0, twist_arm = 1
 directory = 'C:/Users/mjas0/OneDrive/Desktop/moscle'
 audios = []
